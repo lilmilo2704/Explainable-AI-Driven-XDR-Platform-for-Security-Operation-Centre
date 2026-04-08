@@ -1,0 +1,172 @@
+[
+  {
+    "rule": {
+      "id": "100101",
+      "level": 10,
+      "description": "Authentication failure with multiple login attempts detected"
+    },
+    "agent": {
+      "id": "001",
+      "name": "auth-gateway-01"
+    },
+    "data": {
+      "srcip": "203.0.113.25"
+    },
+    "full_log": "failed login for user admin after multiple login attempts from external source",
+    "timestamp": "2026-03-29T09:00:00Z",
+    "scenario_type": "account_takeover"
+  },
+  {
+    "rule": {
+      "id": "100102",
+      "level": 9,
+      "description": "Credential stuffing behavior identified in SSO"
+    },
+    "agent": {
+      "id": "002",
+      "name": "sso-node-02"
+    },
+    "data": {
+      "srcip": "198.51.100.72"
+    },
+    "full_log": "authentication failure burst and multiple login attempts against vip accounts",
+    "timestamp": "2026-03-29T09:01:00Z",
+    "scenario_type": "account_takeover"
+  },
+  {
+    "rule": {
+      "id": "200201",
+      "level": 12,
+      "description": "Suspicious PowerShell execution on endpoint"
+    },
+    "agent": {
+      "id": "003",
+      "name": "win-endpoint-07"
+    },
+    "data": {
+      "srcip": "10.10.4.17"
+    },
+    "full_log": "powershell launched with encoded command and possible malware persistence activity",
+    "timestamp": "2026-03-29T09:02:00Z",
+    "scenario_type": "endpoint_compromise"
+  },
+  {
+    "rule": {
+      "id": "200202",
+      "level": 11,
+      "description": "Registry run key modified for startup persistence"
+    },
+    "agent": {
+      "id": "004",
+      "name": "win-endpoint-12"
+    },
+    "data": {
+      "srcip": "10.10.4.18"
+    },
+    "full_log": "registry key change observed after malware dropper execution",
+    "timestamp": "2026-03-29T09:03:00Z",
+    "scenario_type": "endpoint_compromise"
+  },
+  {
+    "rule": {
+      "id": "300301",
+      "level": 10,
+      "description": "Application gateway reports high traffic flood"
+    },
+    "agent": {
+      "id": "005",
+      "name": "edge-lb-01"
+    },
+    "data": {
+      "srcip": "192.0.2.55"
+    },
+    "full_log": "high traffic and connection spike causing service disruption",
+    "timestamp": "2026-03-29T09:04:00Z",
+    "scenario_type": "ddos"
+  },
+  {
+    "rule": {
+      "id": "300302",
+      "level": 9,
+      "description": "Too many requests from rotating botnet sources"
+    },
+    "agent": {
+      "id": "006",
+      "name": "api-gateway-03"
+    },
+    "data": {
+      "srcip": "192.0.2.99"
+    },
+    "full_log": "too many requests per second and sustained flood pattern",
+    "timestamp": "2026-03-29T09:05:00Z",
+    "scenario_type": "ddos"
+  },
+  {
+    "rule": {
+      "id": "400401",
+      "level": 12,
+      "description": "Unexpected archive creation in finance share"
+    },
+    "agent": {
+      "id": "007",
+      "name": "linux-file-01"
+    },
+    "data": {
+      "srcip": "10.20.6.22"
+    },
+    "full_log": "archive generated followed by outbound data transfer to unknown host",
+    "timestamp": "2026-03-29T09:06:00Z",
+    "scenario_type": "data_exfiltration"
+  },
+  {
+    "rule": {
+      "id": "400402",
+      "level": 11,
+      "description": "Large download from sensitive records directory"
+    },
+    "agent": {
+      "id": "008",
+      "name": "dlp-sensor-02"
+    },
+    "data": {
+      "srcip": "10.20.6.23"
+    },
+    "full_log": "possible exfiltration event with encrypted data transfer outside network",
+    "timestamp": "2026-03-29T09:07:00Z",
+    "scenario_type": "data_exfiltration"
+  },
+  {
+    "rule": {
+      "id": "500501",
+      "level": 10,
+      "description": "Potential SQL injection in public web endpoint"
+    },
+    "agent": {
+      "id": "009",
+      "name": "web-app-01"
+    },
+    "data": {
+      "srcip": "198.51.100.200"
+    },
+    "full_log": "request contains union select * from users and sql injection payload",
+    "timestamp": "2026-03-29T09:08:00Z",
+    "scenario_type": "web_attack"
+  },
+  {
+    "rule": {
+      "id": "500502",
+      "level": 9,
+      "description": "Web exploit attempt with injection pattern"
+    },
+    "agent": {
+      "id": "010",
+      "name": "waf-01"
+    },
+    "data": {
+      "srcip": "198.51.100.201"
+    },
+    "full_log": "sql injection probe detected using OR 1=1 and union operators",
+    "timestamp": "2026-03-29T09:09:00Z",
+    "scenario_type": "web_attack"
+  }
+]

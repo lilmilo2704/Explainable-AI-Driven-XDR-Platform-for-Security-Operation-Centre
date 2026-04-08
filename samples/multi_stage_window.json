@@ -1,0 +1,55 @@
+{
+  "alerts": [
+    {
+      "rule": {
+        "id": "900901",
+        "level": 10,
+        "description": "Authentication failure and multiple login attempts"
+      },
+      "agent": {
+        "id": "201",
+        "name": "identity-node-01"
+      },
+      "data": {
+        "srcip": "203.0.113.44"
+      },
+      "full_log": "failed login wave from suspicious ASN",
+      "timestamp": "2026-03-29T10:00:00Z",
+      "scenario_type": "multi_stage_attack"
+    },
+    {
+      "rule": {
+        "id": "900902",
+        "level": 12,
+        "description": "PowerShell encoded command observed"
+      },
+      "agent": {
+        "id": "202",
+        "name": "endpoint-node-09"
+      },
+      "data": {
+        "srcip": "10.30.9.11"
+      },
+      "full_log": "powershell encoded command launched after suspicious login",
+      "timestamp": "2026-03-29T10:01:00Z",
+      "scenario_type": "multi_stage_attack"
+    },
+    {
+      "rule": {
+        "id": "900903",
+        "level": 11,
+        "description": "Archive and outbound data transfer in short interval"
+      },
+      "agent": {
+        "id": "203",
+        "name": "file-node-04"
+      },
+      "data": {
+        "srcip": "10.30.9.12"
+      },
+      "full_log": "archive created then outbound data transfer to unknown endpoint",
+      "timestamp": "2026-03-29T10:02:00Z",
+      "scenario_type": "multi_stage_attack"
+    }
+  ]
+}

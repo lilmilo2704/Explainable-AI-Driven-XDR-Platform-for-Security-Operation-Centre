@@ -1,0 +1,61 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: xdr-frontend
+    environment:
+      VITE_API_BASE_URL: http://localhost:8000
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: xdr-backend
+    environment:
+      DATABASE_URL: postgresql+psycopg2://xdr:xdrpass@db:5432/xdrdb
+      ML_SERVICE_URL: http://ml-service:5000
+      SEED_ALERTS_PATH: /app/samples/seed_alerts.json
+      SEED_MULTI_STAGE_PATH: /app/samples/multi_stage_window.json
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      ml-service:
+        condition: service_started
+    restart: unless-stopped
+
+  ml-service:
+    build:
+      context: .
+      dockerfile: ml-service/Dockerfile
+    container_name: xdr-ml-service
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+
+  db:
+    image: postgres:15
+    container_name: xdr-db
+    environment:
+      POSTGRES_USER: xdr
+      POSTGRES_PASSWORD: xdrpass
+      POSTGRES_DB: xdrdb
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U xdr -d xdrdb"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - xdr_postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  xdr_postgres_data:
