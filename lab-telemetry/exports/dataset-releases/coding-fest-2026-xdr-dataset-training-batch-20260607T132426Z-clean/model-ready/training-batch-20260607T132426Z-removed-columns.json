@@ -1,0 +1,38 @@
+﻿{
+    "batch_id":  "training-batch-20260607T132426Z",
+    "generated_at_utc":  "2026-06-08T17:50:33.1598518Z",
+    "source_feature_table":  "ml-features\\training-batch-20260607T132426Z-features.csv",
+    "target_column":  "main_label",
+    "explicitly_removed_columns":  [
+                                       "run_id",
+                                       "scenario",
+                                       "sublabel",
+                                       "scenario_variant",
+                                       "actor_profile",
+                                       "benign_activity_level",
+                                       "generator_version",
+                                       "target_endpoint_family",
+                                       "attacker_source_ip",
+                                       "attack_mode",
+                                       "dominant_source_ip",
+                                       "verified_run_dir",
+                                       "manifest_path",
+                                       "metadata_path",
+                                       "webapp_slice_path",
+                                       "nginx_access_slice_path",
+                                       "auth_slice_path",
+                                       "wazuh_archives_slice_path",
+                                       "wazuh_alerts_slice_path",
+                                       "wazuh_evidence_summary_path"
+                                   ],
+    "pattern_removed_columns":  [
+                                    "file/path columns",
+                                    "raw evidence/log text",
+                                    "string IP address columns"
+                                ],
+    "notes":  [
+                  "Scenario names, source IP strings, raw logs, paths, and metadata identifiers are removed from model input.",
+                  "main_label is preserved as the target label.",
+                  "Do not treat this as model training; this script only prepares data for the ML teammate."
+              ]
+}

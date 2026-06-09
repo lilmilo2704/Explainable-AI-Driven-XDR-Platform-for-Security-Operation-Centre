@@ -1,0 +1,69 @@
+# Local/generated caches and raw working evidence
+exports/*.json
+exports/batches/
+exports/dataset-quality/
+exports/explanation-labels/
+exports/labelling-candidates/
+exports/log-cache/
+exports/ml-features/
+exports/model-ready/
+exports/model-ready-explanation/
+exports/plans/
+exports/verified-runs/
+exports/wazuh-cache/
+exports/windowed-datasets/
+
+# Dataset release outputs: keep selected clean metadata in Git, attach ZIPs to GitHub Releases
+exports/dataset-releases/**
+!exports/dataset-releases/
+!exports/dataset-releases/coding-fest-2026-xdr-dataset-training-batch-20260607T132426Z-clean/
+!exports/dataset-releases/coding-fest-2026-xdr-dataset-training-batch-20260607T132426Z-clean/README.md
+!exports/dataset-releases/coding-fest-2026-xdr-dataset-training-batch-20260607T132426Z-clean/batch-manifest/
+!exports/dataset-releases/coding-fest-2026-xdr-dataset-training-batch-20260607T132426Z-clean/batch-manifest/batch-manifest.json
+!exports/dataset-releases/coding-fest-2026-xdr-dataset-training-batch-20260607T132426Z-clean/model-ready/
+!exports/dataset-releases/coding-fest-2026-xdr-dataset-training-batch-20260607T132426Z-clean/model-ready/training-batch-20260607T132426Z-data-dictionary.md
+!exports/dataset-releases/coding-fest-2026-xdr-dataset-training-batch-20260607T132426Z-clean/model-ready/training-batch-20260607T132426Z-removed-columns.json
+!exports/dataset-releases/coding-fest-2026-xdr-dataset-training-batch-20260607T132426Z-clean/quality-summary/
+!exports/dataset-releases/coding-fest-2026-xdr-dataset-training-batch-20260607T132426Z-clean/quality-summary/training-batch-20260607T132426Z-quality-summary.csv
+!exports/dataset-releases/coding-fest-2026-xdr-dataset-training-batch-20260607T132426Z-clean/quality-summary/training-batch-20260607T132426Z-quality-summary.json
+!exports/dataset-releases/coding-fest-2026-xdr-dataset-training-batch-20260607T132426Z-clean/windowed-dataset/
+!exports/dataset-releases/coding-fest-2026-xdr-dataset-training-batch-20260607T132426Z-clean/windowed-dataset/training-batch-20260607T132426Z-window-build-summary.json
+
+# Sensitive local evidence
+screenshots/*
+!screenshots/
+!screenshots/Screenshot 2026-06-03 062617.png
+!screenshots/Screenshot 2026-06-03 072422.png
+!screenshots/Screenshot 2026-06-08 063608.png
+!screenshots/Screenshot 2026-06-06 081548.png
+!screenshots/Screenshot 2026-06-09 035108.png
+!screenshots/Screenshot 2026-06-06 082651.png
+screenshots/Wazuh credential.txt
+screenshots/Screenshot 2026-06-03 060437.png
+
+# Internal handoff/history files with local lab details
+AGENTS.md
+clear/
+reference-docs/
+docs/01_lab_build_memory_updated.md
+docs/07_poster_text.md
+docs/08_command_history.md
+docs/09_source_inventory.md
+docs/10_CODEX_NEXT_TASKS.md
+docs/12_latest_health_check_and_codex_state.md
+docs/14_HOW_TO_USE_THIS_CONTEXT_PACK_WITH_CODEX.md
+docs/CODEX_CURRENT_STATUS_HANDOFF.md
+docs/CODEX_WEBAPP_LOGGING_PATCH.md
+docs/coding_fest_2026_lab_build_memory_updated_v12.md
+
+# Office/editor temporary files
+~$*
+*.tmp
+
+# Python/cache/editor noise
+__pycache__/
+*.pyc
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store

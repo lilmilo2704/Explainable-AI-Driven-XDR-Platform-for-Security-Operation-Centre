@@ -1,0 +1,13 @@
+﻿{
+    "batch_id":  "training-batch-20260607T132426Z",
+    "generated_at_utc":  "2026-06-08T17:50:17.0576030Z",
+    "window_seconds":  5,
+    "step_seconds":  5,
+    "row_count":  798,
+    "include_wazuh":  true,
+    "warnings":  [
+                     "Missing metadata for benign-20260607T132426Z-043"
+                 ],
+    "csv_path":  "windowed-dataset\\training-batch-20260607T132426Z-windows.csv",
+    "json_path":  "windowed-dataset\\training-batch-20260607T132426Z-windows.json"
+}

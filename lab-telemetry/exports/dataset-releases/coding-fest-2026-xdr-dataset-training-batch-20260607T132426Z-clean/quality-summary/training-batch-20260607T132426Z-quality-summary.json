@@ -1,0 +1,26 @@
+﻿{
+    "batch_id":  "training-batch-20260607T132426Z",
+    "total_runs":  300,
+    "runs_by_scenario":  {
+                             "Benign":  100,
+                             "LightDos":  100,
+                             "AttackerHostLightDos":  100
+                         },
+    "runs_by_label":  {
+                          "Benign":  100,
+                          "DoS_DDoS":  200
+                      },
+    "missing_file_warnings":  [
+                                  "Run benign-20260607T132426Z-043 missing verified-run manifest file: raw-evidence\\verified-runs\\benign-20260607T132426Z-043\\manifest.json",
+                                  "Run benign-20260607T132426Z-043 missing verified-run metadata file: raw-evidence\\verified-runs\\benign-20260607T132426Z-043\\metadata.json",
+                                  "Run benign-20260607T132426Z-043 missing Wazuh evidence summary file: raw-evidence\\verified-runs\\benign-20260607T132426Z-043\\wazuh-evidence-summary.json",
+                                  "Run benign-20260607T132426Z-043 missing webapp slice file: raw-evidence\\verified-runs\\benign-20260607T132426Z-043\\webapp-slice.log",
+                                  "Run benign-20260607T132426Z-043 missing nginx access slice file: raw-evidence\\verified-runs\\benign-20260607T132426Z-043\\nginx-access-slice.log"
+                              ],
+    "parse_warnings":  [
+
+                       ],
+    "invalid_webapp_json_line_count":  0,
+    "generated_at_utc":  "2026-06-08T17:49:24.3271017Z",
+    "csv_path":  "quality-summary\\training-batch-20260607T132426Z-quality-summary.csv"
+}
