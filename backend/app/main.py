@@ -49,8 +49,16 @@ def run_schema_bootstrap() -> None:
         ADD COLUMN IF NOT EXISTS incident_id INTEGER
         """,
         """
+        ALTER TABLE predictions
+        ADD COLUMN IF NOT EXISTS explanation_features JSONB DEFAULT '[]'::jsonb
+        """,
+        """
         ALTER TABLE incidents
         ADD COLUMN IF NOT EXISTS summary_text TEXT DEFAULT ''
+        """,
+        """
+        ALTER TABLE incidents
+        ADD COLUMN IF NOT EXISTS explanation_features JSONB DEFAULT '[]'::jsonb
         """,
         """
         ALTER TABLE incidents
@@ -137,6 +145,7 @@ def ingest_alert_route(payload: AlertIngestPayload, db: Session = Depends(get_db
             "recommended_action": prediction.recommended_action,
             "model_version": prediction.model_version,
             "explanation_summary": prediction.explanation_summary,
+            "explanation_features": prediction.explanation_features,
         },
         "incident_id": f"INC-{incident.id:06d}" if incident else None,
     }
@@ -235,36 +244,46 @@ def models() -> dict[str, Any]:
     return {
         "models": [
             {
-                "id": "mock-event-model",
-                "name": "Mock Event Classifier",
-                "version": "contract-v1",
-                "purpose": "Per-event incident likelihood",
+                "id": "xdr-run-level-ebm",
+                "name": "Run-Level EBM DDoS Detector",
+                "version": "xdr-run-level-dos-ebm-surrogate-v1",
+                "purpose": "Run-level Benign vs DoS_DDoS detection with native EBM explanations",
                 "attack_classes_supported": [
-                    "Account Takeover",
-                    "Endpoint Compromise",
-                    "DDoS",
-                    "Data Exfiltration",
-                    "Web Attack",
-                    "Multi-Stage Attack",
+                    "Benign",
+                    "DoS_DDoS",
                 ],
                 "latest_inference_time": now_iso(),
                 "explanation_available": True,
             },
             {
-                "id": "mock-window-model",
-                "name": "Mock Window Correlator",
-                "version": "contract-v1",
-                "purpose": "Correlates events into incident narrative and graph",
+                "id": "xdr-run-level-teachers",
+                "name": "Teacher Models With EBM Surrogates",
+                "version": "xdr-run-level-dos-ebm-surrogate-v1",
+                "purpose": "XGBoost, Random Forest, SVM, and MLP teachers explained by EBM surrogates",
                 "attack_classes_supported": [
-                    "Account Takeover",
-                    "Endpoint Compromise",
-                    "DDoS",
-                    "Data Exfiltration",
-                    "Web Attack",
-                    "Multi-Stage Attack",
+                    "Benign",
+                    "DoS_DDoS",
                 ],
                 "latest_inference_time": now_iso(),
                 "explanation_available": True,
+                "class_level_scores": [
+                    {"class_name": "Benign", "f1_score": 0.96},
+                    {"class_name": "DoS_DDoS", "f1_score": 0.96},
+                ],
+                "dominant_features_by_class": {
+                    "DoS_DDoS": [
+                        "request_rate_per_second",
+                        "peak_request_rate_per_second",
+                        "search_request_ratio",
+                        "request_repeat_ratio",
+                    ],
+                    "Benign": [
+                        "health_check_ratio",
+                        "avg_response_time_ms",
+                        "p95_avg_latency_ratio",
+                    ],
+                },
+                "note": "Legacy keyword models remain as fallbacks for non-DDoS demo scenarios.",
             },
         ]
     }

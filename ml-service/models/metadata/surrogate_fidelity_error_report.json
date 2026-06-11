@@ -1,0 +1,751 @@
+{
+  "generated_at_utc": "2026-06-10T07:33:51.184817+00:00",
+  "feature_count": 17,
+  "train_rows": 209,
+  "test_rows": 60,
+  "synthetic_sampling": {
+    "local_perturbation_rows": 1000,
+    "vae_rows": 500,
+    "combined_rows": 1500,
+    "clip_min_max_source": "training split final processed features",
+    "vae": {
+      "latent_dim": 2,
+      "epochs": 600,
+      "loss_trace_every_50_epochs": [
+        1.0170978307724,
+        0.3624538481235504,
+        0.21884575486183167,
+        0.15696947276592255,
+        0.13177333772182465,
+        0.12160776555538177,
+        0.1194969117641449,
+        0.11251208186149597,
+        0.11182798445224762,
+        0.10876002907752991,
+        0.10669848322868347,
+        0.10658310353755951,
+        0.10146832466125488
+      ]
+    }
+  },
+  "teachers": {
+    "xgboost": {
+      "teacher": "xgboost",
+      "surrogate": "ebm",
+      "synthetic_train_rows": 1200,
+      "synthetic_holdout_rows": 300,
+      "pseudo_label_distribution": {
+        "class_0": 544,
+        "class_1": 956
+      },
+      "synthetic_holdout_fidelity_to_teacher": {
+        "accuracy": 0.9633333333333334,
+        "precision": 0.9591836734693877,
+        "recall": 0.9842931937172775,
+        "f1": 0.9715762273901809,
+        "confusion_matrix": [
+          [
+            101,
+            8
+          ],
+          [
+            3,
+            188
+          ]
+        ]
+      },
+      "test_fidelity_to_teacher": {
+        "accuracy": 0.9833333333333333,
+        "precision": 0.9772727272727273,
+        "recall": 1.0,
+        "f1": 0.9885057471264368,
+        "confusion_matrix": [
+          [
+            16,
+            1
+          ],
+          [
+            0,
+            43
+          ]
+        ]
+      },
+      "teacher_test_performance_vs_true_label": {
+        "accuracy": 0.95,
+        "precision": 0.9302325581395349,
+        "recall": 1.0,
+        "f1": 0.963855421686747,
+        "confusion_matrix": [
+          [
+            17,
+            3
+          ],
+          [
+            0,
+            40
+          ]
+        ]
+      },
+      "surrogate_test_performance_vs_true_label": {
+        "accuracy": 0.9333333333333333,
+        "precision": 0.9090909090909091,
+        "recall": 1.0,
+        "f1": 0.9523809523809523,
+        "confusion_matrix": [
+          [
+            16,
+            4
+          ],
+          [
+            0,
+            40
+          ]
+        ]
+      },
+      "error_fidelity": {
+        "teacher_misclassified_count": 3,
+        "teacher_misclassified_rate": 0.05,
+        "misclassified_fidelity": {
+          "subset_name": "teacher_misclassified",
+          "row_count": 3,
+          "share_of_test_set": 0.05,
+          "fidelity_to_reference": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "confusion_matrix": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                3
+              ]
+            ]
+          },
+          "peer_vs_true_label": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "confusion_matrix": [
+              [
+                0,
+                3
+              ],
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          "peer_matches_reference_count": 3,
+          "peer_matches_reference_rate": 1.0,
+          "peer_matches_true_label_count": 0,
+          "peer_matches_true_label_rate": 0.0
+        },
+        "teacher_false_positive_subset": {
+          "subset_name": "teacher_false_positives",
+          "row_count": 3,
+          "share_of_test_set": 0.05,
+          "fidelity_to_reference": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "confusion_matrix": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                3
+              ]
+            ]
+          },
+          "peer_vs_true_label": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "confusion_matrix": [
+              [
+                0,
+                3
+              ],
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          "peer_matches_reference_count": 3,
+          "peer_matches_reference_rate": 1.0,
+          "peer_matches_true_label_count": 0,
+          "peer_matches_true_label_rate": 0.0
+        },
+        "teacher_false_negative_subset": {
+          "subset_name": "teacher_false_negatives",
+          "row_count": 0,
+          "share_of_test_set": 0.0,
+          "fidelity_to_reference": null,
+          "peer_vs_true_label": null,
+          "peer_matches_reference_count": 0,
+          "peer_matches_reference_rate": null,
+          "peer_matches_true_label_count": 0,
+          "peer_matches_true_label_rate": null
+        }
+      },
+      "model_path": "train\\artifacts\\surrogates\\models\\ebm_surrogate_for_xgboost.joblib"
+    },
+    "random_forest": {
+      "teacher": "random_forest",
+      "surrogate": "ebm",
+      "synthetic_train_rows": 1200,
+      "synthetic_holdout_rows": 300,
+      "pseudo_label_distribution": {
+        "class_0": 600,
+        "class_1": 900
+      },
+      "synthetic_holdout_fidelity_to_teacher": {
+        "accuracy": 0.97,
+        "precision": 0.9776536312849162,
+        "recall": 0.9722222222222222,
+        "f1": 0.9749303621169917,
+        "confusion_matrix": [
+          [
+            116,
+            4
+          ],
+          [
+            5,
+            175
+          ]
+        ]
+      },
+      "test_fidelity_to_teacher": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "confusion_matrix": [
+          [
+            17,
+            0
+          ],
+          [
+            0,
+            43
+          ]
+        ]
+      },
+      "teacher_test_performance_vs_true_label": {
+        "accuracy": 0.95,
+        "precision": 0.9302325581395349,
+        "recall": 1.0,
+        "f1": 0.963855421686747,
+        "confusion_matrix": [
+          [
+            17,
+            3
+          ],
+          [
+            0,
+            40
+          ]
+        ]
+      },
+      "surrogate_test_performance_vs_true_label": {
+        "accuracy": 0.95,
+        "precision": 0.9302325581395349,
+        "recall": 1.0,
+        "f1": 0.963855421686747,
+        "confusion_matrix": [
+          [
+            17,
+            3
+          ],
+          [
+            0,
+            40
+          ]
+        ]
+      },
+      "error_fidelity": {
+        "teacher_misclassified_count": 3,
+        "teacher_misclassified_rate": 0.05,
+        "misclassified_fidelity": {
+          "subset_name": "teacher_misclassified",
+          "row_count": 3,
+          "share_of_test_set": 0.05,
+          "fidelity_to_reference": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "confusion_matrix": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                3
+              ]
+            ]
+          },
+          "peer_vs_true_label": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "confusion_matrix": [
+              [
+                0,
+                3
+              ],
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          "peer_matches_reference_count": 3,
+          "peer_matches_reference_rate": 1.0,
+          "peer_matches_true_label_count": 0,
+          "peer_matches_true_label_rate": 0.0
+        },
+        "teacher_false_positive_subset": {
+          "subset_name": "teacher_false_positives",
+          "row_count": 3,
+          "share_of_test_set": 0.05,
+          "fidelity_to_reference": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "confusion_matrix": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                3
+              ]
+            ]
+          },
+          "peer_vs_true_label": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "confusion_matrix": [
+              [
+                0,
+                3
+              ],
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          "peer_matches_reference_count": 3,
+          "peer_matches_reference_rate": 1.0,
+          "peer_matches_true_label_count": 0,
+          "peer_matches_true_label_rate": 0.0
+        },
+        "teacher_false_negative_subset": {
+          "subset_name": "teacher_false_negatives",
+          "row_count": 0,
+          "share_of_test_set": 0.0,
+          "fidelity_to_reference": null,
+          "peer_vs_true_label": null,
+          "peer_matches_reference_count": 0,
+          "peer_matches_reference_rate": null,
+          "peer_matches_true_label_count": 0,
+          "peer_matches_true_label_rate": null
+        }
+      },
+      "model_path": "train\\artifacts\\surrogates\\models\\ebm_surrogate_for_random_forest.joblib"
+    },
+    "svm": {
+      "teacher": "svm",
+      "surrogate": "ebm",
+      "synthetic_train_rows": 1200,
+      "synthetic_holdout_rows": 300,
+      "pseudo_label_distribution": {
+        "class_0": 457,
+        "class_1": 1043
+      },
+      "synthetic_holdout_fidelity_to_teacher": {
+        "accuracy": 0.9866666666666667,
+        "precision": 0.9904306220095693,
+        "recall": 0.9904306220095693,
+        "f1": 0.9904306220095693,
+        "confusion_matrix": [
+          [
+            89,
+            2
+          ],
+          [
+            2,
+            207
+          ]
+        ]
+      },
+      "test_fidelity_to_teacher": {
+        "accuracy": 0.95,
+        "precision": 1.0,
+        "recall": 0.9347826086956522,
+        "f1": 0.9662921348314607,
+        "confusion_matrix": [
+          [
+            14,
+            0
+          ],
+          [
+            3,
+            43
+          ]
+        ]
+      },
+      "teacher_test_performance_vs_true_label": {
+        "accuracy": 0.9,
+        "precision": 0.8695652173913043,
+        "recall": 1.0,
+        "f1": 0.9302325581395349,
+        "confusion_matrix": [
+          [
+            14,
+            6
+          ],
+          [
+            0,
+            40
+          ]
+        ]
+      },
+      "surrogate_test_performance_vs_true_label": {
+        "accuracy": 0.95,
+        "precision": 0.9302325581395349,
+        "recall": 1.0,
+        "f1": 0.963855421686747,
+        "confusion_matrix": [
+          [
+            17,
+            3
+          ],
+          [
+            0,
+            40
+          ]
+        ]
+      },
+      "error_fidelity": {
+        "teacher_misclassified_count": 6,
+        "teacher_misclassified_rate": 0.1,
+        "misclassified_fidelity": {
+          "subset_name": "teacher_misclassified",
+          "row_count": 6,
+          "share_of_test_set": 0.1,
+          "fidelity_to_reference": {
+            "accuracy": 0.5,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666,
+            "confusion_matrix": [
+              [
+                0,
+                0
+              ],
+              [
+                3,
+                3
+              ]
+            ]
+          },
+          "peer_vs_true_label": {
+            "accuracy": 0.5,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "confusion_matrix": [
+              [
+                3,
+                3
+              ],
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          "peer_matches_reference_count": 3,
+          "peer_matches_reference_rate": 0.5,
+          "peer_matches_true_label_count": 3,
+          "peer_matches_true_label_rate": 0.5
+        },
+        "teacher_false_positive_subset": {
+          "subset_name": "teacher_false_positives",
+          "row_count": 6,
+          "share_of_test_set": 0.1,
+          "fidelity_to_reference": {
+            "accuracy": 0.5,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666,
+            "confusion_matrix": [
+              [
+                0,
+                0
+              ],
+              [
+                3,
+                3
+              ]
+            ]
+          },
+          "peer_vs_true_label": {
+            "accuracy": 0.5,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "confusion_matrix": [
+              [
+                3,
+                3
+              ],
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          "peer_matches_reference_count": 3,
+          "peer_matches_reference_rate": 0.5,
+          "peer_matches_true_label_count": 3,
+          "peer_matches_true_label_rate": 0.5
+        },
+        "teacher_false_negative_subset": {
+          "subset_name": "teacher_false_negatives",
+          "row_count": 0,
+          "share_of_test_set": 0.0,
+          "fidelity_to_reference": null,
+          "peer_vs_true_label": null,
+          "peer_matches_reference_count": 0,
+          "peer_matches_reference_rate": null,
+          "peer_matches_true_label_count": 0,
+          "peer_matches_true_label_rate": null
+        }
+      },
+      "model_path": "train\\artifacts\\surrogates\\models\\ebm_surrogate_for_svm.joblib"
+    },
+    "mlp": {
+      "teacher": "mlp",
+      "surrogate": "ebm",
+      "synthetic_train_rows": 1200,
+      "synthetic_holdout_rows": 300,
+      "pseudo_label_distribution": {
+        "class_0": 432,
+        "class_1": 1068
+      },
+      "synthetic_holdout_fidelity_to_teacher": {
+        "accuracy": 0.9633333333333334,
+        "precision": 0.9720930232558139,
+        "recall": 0.9766355140186916,
+        "f1": 0.9743589743589743,
+        "confusion_matrix": [
+          [
+            80,
+            6
+          ],
+          [
+            5,
+            209
+          ]
+        ]
+      },
+      "test_fidelity_to_teacher": {
+        "accuracy": 0.9,
+        "precision": 0.9777777777777777,
+        "recall": 0.8979591836734694,
+        "f1": 0.9361702127659575,
+        "confusion_matrix": [
+          [
+            10,
+            1
+          ],
+          [
+            5,
+            44
+          ]
+        ]
+      },
+      "teacher_test_performance_vs_true_label": {
+        "accuracy": 0.8166666666666667,
+        "precision": 0.7959183673469388,
+        "recall": 0.975,
+        "f1": 0.8764044943820225,
+        "confusion_matrix": [
+          [
+            10,
+            10
+          ],
+          [
+            1,
+            39
+          ]
+        ]
+      },
+      "surrogate_test_performance_vs_true_label": {
+        "accuracy": 0.9166666666666666,
+        "precision": 0.8888888888888888,
+        "recall": 1.0,
+        "f1": 0.9411764705882353,
+        "confusion_matrix": [
+          [
+            15,
+            5
+          ],
+          [
+            0,
+            40
+          ]
+        ]
+      },
+      "error_fidelity": {
+        "teacher_misclassified_count": 11,
+        "teacher_misclassified_rate": 0.18333333333333332,
+        "misclassified_fidelity": {
+          "subset_name": "teacher_misclassified",
+          "row_count": 11,
+          "share_of_test_set": 0.18333333333333332,
+          "fidelity_to_reference": {
+            "accuracy": 0.45454545454545453,
+            "precision": 0.8333333333333334,
+            "recall": 0.5,
+            "f1": 0.625,
+            "confusion_matrix": [
+              [
+                0,
+                1
+              ],
+              [
+                5,
+                5
+              ]
+            ]
+          },
+          "peer_vs_true_label": {
+            "accuracy": 0.5454545454545454,
+            "precision": 0.16666666666666666,
+            "recall": 1.0,
+            "f1": 0.2857142857142857,
+            "confusion_matrix": [
+              [
+                5,
+                5
+              ],
+              [
+                0,
+                1
+              ]
+            ]
+          },
+          "peer_matches_reference_count": 5,
+          "peer_matches_reference_rate": 0.45454545454545453,
+          "peer_matches_true_label_count": 6,
+          "peer_matches_true_label_rate": 0.5454545454545454
+        },
+        "teacher_false_positive_subset": {
+          "subset_name": "teacher_false_positives",
+          "row_count": 10,
+          "share_of_test_set": 0.16666666666666666,
+          "fidelity_to_reference": {
+            "accuracy": 0.5,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666,
+            "confusion_matrix": [
+              [
+                0,
+                0
+              ],
+              [
+                5,
+                5
+              ]
+            ]
+          },
+          "peer_vs_true_label": {
+            "accuracy": 0.5,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "confusion_matrix": [
+              [
+                5,
+                5
+              ],
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          "peer_matches_reference_count": 5,
+          "peer_matches_reference_rate": 0.5,
+          "peer_matches_true_label_count": 5,
+          "peer_matches_true_label_rate": 0.5
+        },
+        "teacher_false_negative_subset": {
+          "subset_name": "teacher_false_negatives",
+          "row_count": 1,
+          "share_of_test_set": 0.016666666666666666,
+          "fidelity_to_reference": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "confusion_matrix": [
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          "peer_vs_true_label": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "confusion_matrix": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                1
+              ]
+            ]
+          },
+          "peer_matches_reference_count": 0,
+          "peer_matches_reference_rate": 0.0,
+          "peer_matches_true_label_count": 1,
+          "peer_matches_true_label_rate": 1.0
+        }
+      },
+      "model_path": "train\\artifacts\\surrogates\\models\\ebm_surrogate_for_mlp.joblib"
+    }
+  }
+}

@@ -39,6 +39,7 @@ def serialize_prediction(prediction: Prediction | None) -> dict[str, Any] | None
         "recommended_action": prediction.recommended_action,
         "model_version": prediction.model_version,
         "explanation_summary": prediction.explanation_summary,
+        "explanation_features": prediction.explanation_features or [],
         "created_at": to_iso(prediction.created_at),
     }
 
@@ -100,6 +101,9 @@ def serialize_incident_detail(incident: Incident) -> dict[str, Any]:
     related_alerts = [serialize_alert(link.alert, include_raw=False) for link in incident.alert_links]
     timeline_events = incident.timeline_events or []
     graph = incident.causal_graph or {"nodes": [], "edges": []}
+    explanation_features = incident.explanation_features or [
+        {"feature": "window_correlation", "contribution": incident.confidence, "direction": "up"}
+    ]
 
     return {
         "incident": summary,
@@ -113,13 +117,11 @@ def serialize_incident_detail(incident: Incident) -> dict[str, Any]:
             "class_probabilities": [
                 {"class_name": incident.incident_type, "value": incident.confidence}
             ],
-            "top_indicators": ["event_family", "severity_hint", "scenario_type"],
+            "top_indicators": [item.get("feature", "unknown") for item in explanation_features[:5]],
         },
         "explanation": {
             "summary": incident.explanation_summary,
-            "features": [
-                {"feature": "window_correlation", "contribution": incident.confidence, "direction": "up"}
-            ],
+            "features": explanation_features,
         },
         "evidence": {
             "related_alert_ids": [alert["id"] for alert in related_alerts],

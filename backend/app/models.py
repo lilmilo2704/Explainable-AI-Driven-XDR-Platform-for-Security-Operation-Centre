@@ -53,6 +53,7 @@ class Prediction(Base):
     recommended_action: Mapped[str] = mapped_column(Text)
     model_version: Mapped[str] = mapped_column(String(64))
     explanation_summary: Mapped[str] = mapped_column(Text)
+    explanation_features: Mapped[list[dict[str, Any]]] = mapped_column(JSONB, default=list)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
     )
@@ -71,6 +72,7 @@ class Incident(Base):
     recommended_action: Mapped[str] = mapped_column(Text)
     model_version: Mapped[str] = mapped_column(String(64))
     explanation_summary: Mapped[str] = mapped_column(Text)
+    explanation_features: Mapped[list[dict[str, Any]]] = mapped_column(JSONB, default=list)
     summary_text: Mapped[str] = mapped_column(Text, default="")
     timeline_events: Mapped[list[dict[str, Any]]] = mapped_column(JSONB, default=list)
     causal_graph: Mapped[dict[str, Any]] = mapped_column(JSONB, default=dict)

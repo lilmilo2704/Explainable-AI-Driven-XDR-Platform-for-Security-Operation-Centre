@@ -64,6 +64,7 @@ class MLPrediction(BaseModel):
     recommended_action: str
     model_version: str
     explanation_summary: str
+    explanation_features: list[dict[str, Any]] = Field(default_factory=list)
 
 
 class MLWindowAnalysis(MLPrediction):

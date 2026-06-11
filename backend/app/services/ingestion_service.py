@@ -40,6 +40,7 @@ def ingest_single_alert(db: Session, payload: AlertIngestPayload, ml_client: MLC
         recommended_action=prediction_data.recommended_action,
         model_version=prediction_data.model_version,
         explanation_summary=prediction_data.explanation_summary,
+        explanation_features=prediction_data.explanation_features,
     )
     db.add(prediction)
 
@@ -52,6 +53,7 @@ def ingest_single_alert(db: Session, payload: AlertIngestPayload, ml_client: MLC
             recommended_action=prediction.recommended_action,
             model_version=prediction.model_version,
             explanation_summary=prediction.explanation_summary,
+            explanation_features=prediction.explanation_features,
             summary_text=prediction.explanation_summary,
             timeline_events=[
                 {
@@ -146,6 +148,7 @@ def ingest_window_incident(
         recommended_action=analysis.recommended_action,
         model_version=analysis.model_version,
         explanation_summary=analysis.explanation_summary,
+        explanation_features=analysis.explanation_features,
         summary_text=analysis.summary_text or analysis.explanation_summary,
         timeline_events=timeline_events,
         causal_graph=analysis.causal_graph,
@@ -165,6 +168,7 @@ def ingest_window_incident(
             recommended_action=analysis.recommended_action,
             model_version=analysis.model_version,
             explanation_summary=analysis.explanation_summary,
+            explanation_features=analysis.explanation_features,
         )
         db.add(prediction)
 
