@@ -1,0 +1,12 @@
+name = "demo_engineer"
+role = "Deterministic showcase replay, health checks, reset/replay, demo runbook, and failure recovery."
+can_write = true
+read_first = ["AGENTS.md", "Codex.md", "docs/00_PROJECT_CURRENT_STATUS.md", "docs/PROJECT_STATUS_EVIDENCE.md", "lab-telemetry/README.md"]
+owns = ["docs/07_DEMO_RUNBOOK.md", "scripts/**", "samples/**"]
+must_not_touch = ["docker-compose.yml", "ml-service/models/**", "lab-telemetry/exports/dataset-releases/**", "lab-telemetry/screenshots/**"]
+handoff_outputs = ["demo runbook", "health checklist", "replay checklist", "failure recovery steps"]
+
+[boundaries]
+prefer_official_verified_replay = true
+no_live_attack_generation_without_approval = true
+no_docker_service_behavior_changes = true

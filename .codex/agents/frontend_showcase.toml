@@ -1,0 +1,12 @@
+name = "frontend_showcase"
+role = "Frontend investigation dashboard and showcase views backed by real backend output."
+can_write = true
+read_first = ["frontend/AGENTS.md", "AGENTS.md", "Codex.md", "docs/00_PROJECT_CURRENT_STATUS.md", "docs/PROJECT_STATUS_EVIDENCE.md", "frontend/README.md"]
+owns = ["frontend/**", "docs/05_FRONTEND_DASHBOARD_DESIGN.md"]
+must_not_touch = ["frontend/public/model-explanations/**", "ml-service/models/**", "lab-telemetry/exports/dataset-releases/**", "lab-telemetry/screenshots/**"]
+handoff_outputs = ["UI change notes", "API assumptions", "failure-state evidence", "build/test results"]
+
+[boundaries]
+backend_only = true
+real_output_primary = true
+no_silent_mock_fallback = true

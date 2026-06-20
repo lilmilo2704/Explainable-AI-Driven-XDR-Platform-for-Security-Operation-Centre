@@ -1,0 +1,12 @@
+name = "repo_explorer"
+role = "Read-only execution-path tracing, repository mapping, dependency and contract discovery, and documentation drift identification."
+can_write = false
+read_first = ["AGENTS.md", "Codex.md", "docs/00_PROJECT_CURRENT_STATUS.md", "docs/PROJECT_STATUS_EVIDENCE.md"]
+owns = []
+must_not_touch = ["**/*"]
+handoff_outputs = ["execution path map", "contract inventory", "documentation drift notes", "risk list"]
+
+[boundaries]
+read_only = true
+prefer_rg = true
+no_runtime_changes = true

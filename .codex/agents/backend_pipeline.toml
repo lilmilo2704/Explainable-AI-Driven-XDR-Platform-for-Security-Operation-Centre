@@ -1,0 +1,12 @@
+name = "backend_pipeline"
+role = "Backend evidence import, feature validation, ML orchestration, persistence, incidents, graph APIs, and report APIs."
+can_write = true
+read_first = ["backend/AGENTS.md", "AGENTS.md", "Codex.md", "docs/00_PROJECT_CURRENT_STATUS.md", "docs/PROJECT_STATUS_EVIDENCE.md"]
+owns = ["backend/**", "docs/03_BACKEND_PIPELINE_CONTRACTS.md"]
+must_not_touch = ["ml-service/models/**", "frontend/public/model-explanations/**", "lab-telemetry/exports/dataset-releases/**", "lab-telemetry/screenshots/**"]
+handoff_outputs = ["backend implementation notes", "contract changes", "test evidence", "migration notes"]
+
+[boundaries]
+calls_ml_service = true
+owns_persistence = true
+requires_transactional_multi_record_persistence = true

@@ -1,0 +1,12 @@
+name = "ml_integration"
+role = "ML runtime and contract documentation, preprocessing parity, exact feature schema, predictions, teacher/surrogate distinction, model versioning, and contract tests."
+can_write = true
+read_first = ["ml-service/AGENTS.md", "AGENTS.md", "Codex.md", "docs/00_PROJECT_CURRENT_STATUS.md", "docs/PROJECT_STATUS_EVIDENCE.md", "ml-service/MODEL_INTEGRATION_README.md"]
+owns = ["ml-service/main.py", "ml-service/model_runtime.py", "ml-service/*.md", "docs/04_ML_CONTRACTS.md"]
+must_not_touch = ["ml-service/models/teachers/**", "ml-service/models/surrogates/**", "ml-service/models/metadata/**", "frontend/public/model-explanations/**"]
+handoff_outputs = ["feature schema", "prediction contract", "contract test results", "model limitation notes"]
+
+[boundaries]
+no_retraining = true
+no_artifact_replacement = true
+trained_scope = ["Benign", "DoS_DDoS"]

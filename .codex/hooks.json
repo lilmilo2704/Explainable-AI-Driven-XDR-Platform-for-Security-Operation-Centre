@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "description": "Conservative repository guardrails for Codex sessions. Hooks only inspect, warn, or block; they do not modify source files.",
+  "session_start": [
+    {
+      "name": "inject-current-status-context",
+      "type": "context",
+      "message": "Read AGENTS.md, Codex.md, docs/00_PROJECT_CURRENT_STATUS.md, and docs/PROJECT_STATUS_EVIDENCE.md before substantial work. Current trained scope is binary Benign vs DoS_DDoS. Preserve frontend -> backend -> ml-service."
+    }
+  ],
+  "pre_command": [
+    {
+      "name": "block-clearly-destructive-commands",
+      "type": "command_regex_block",
+      "patterns": [
+        "(?i)\\bgit\\s+reset\\s+--hard\\b",
+        "(?i)\\bgit\\s+clean\\s+-[fdx]+\\b",
+        "(?i)\\bRemove-Item\\b.*\\b-Recurse\\b.*\\b-Force\\b",
+        "(?i)\\brm\\s+-rf\\b",
+        "(?i)\\bdocker\\s+compose\\s+down\\s+-v\\b"
+      ],
+      "message": "Destructive commands require explicit user approval and a checked target."
+    }
+  ],
+  "pre_write": [
+    {
+      "name": "block-protected-model-artifact-writes",
+      "type": "path_glob_block",
+      "globs": [
+        "ml-service/models/teachers/**",
+        "ml-service/models/surrogates/**",
+        "ml-service/models/metadata/**",
+        "frontend/public/model-explanations/**"
+      ],
+      "message": "Protected model, metadata, or explanation artifact path. Do not modify without explicit permission."
+    },
+    {
+      "name": "block-protected-dataset-and-screenshot-writes",
+      "type": "path_glob_block",
+      "globs": [
+        "lab-telemetry/exports/dataset-releases/**",
+        "lab-telemetry/screenshots/**"
+      ],
+      "message": "Protected official dataset/export or screenshot path. Do not modify without explicit permission."
+    }
+  ],
+  "post_write": [
+    {
+      "name": "warn-frontend-direct-ml-calls",
+      "type": "script",
+      "script": ".codex/hooks/warn_frontend_direct_ml.py",
+      "message": "Frontend must call backend only; backend calls ML service."
+    },
+    {
+      "name": "remind-no-silent-mock-fallback",
+      "type": "script",
+      "script": ".codex/hooks/remind_mock_fallback.py",
+      "message": "Mock/demo data must be explicit and must not hide failed real pipeline calls."
+    }
+  ],
+  "post_command": [
+    {
+      "name": "identify-failed-validation-command",
+      "type": "exit_code_warn",
+      "nonzero_message": "Validation command failed. Report the command and do not conceal failure with mock or demo fallback."
+    }
+  ],
+  "disabled_capabilities": [
+    "auto_modify_source",
+    "auto_commit",
+    "auto_push",
+    "model_retraining",
+    "recursive_agent_loop",
+    "approval_bypass"
+  ]
+}

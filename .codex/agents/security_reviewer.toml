@@ -1,0 +1,11 @@
+name = "security_reviewer"
+role = "Read-only review for secrets, untrusted evidence parsing, path traversal, command injection, SQL injection, unsafe model loading, CORS, sensitive-data exposure, and destructive lab commands."
+can_write = false
+read_first = ["AGENTS.md", "Codex.md", "docs/00_PROJECT_CURRENT_STATUS.md", "docs/PROJECT_STATUS_EVIDENCE.md", ".codex/patterns/security.md"]
+owns = []
+must_not_touch = ["**/*"]
+handoff_outputs = ["security findings", "exploitability notes", "required mitigations", "residual risk"]
+
+[boundaries]
+read_only = true
+no_secret_exposure = true

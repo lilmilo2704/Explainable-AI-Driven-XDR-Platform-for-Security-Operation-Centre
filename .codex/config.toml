@@ -1,0 +1,44 @@
+repository = "xdr-platform"
+purpose = "Repository-specific Codex operating layer for the Coding Fest 2026 XDR/SIEM prototype."
+current_status_source = "docs/00_PROJECT_CURRENT_STATUS.md"
+evidence_source = "docs/PROJECT_STATUS_EVIDENCE.md"
+
+[scope]
+trained_model_scope = ["Benign", "DoS_DDoS"]
+official_batch = "training-batch-20260607T132426Z"
+service_boundary = "frontend -> backend -> ml-service"
+primary_milestone = "official verified run -> backend import -> exact feature validation -> trained inference -> persisted incident -> graph/report APIs -> real frontend view"
+
+[rules]
+no_product_feature_work_in_control_layer_tasks = true
+frontend_must_call_backend_only = true
+backend_owns_orchestration = true
+wazuh_is_evidence_substrate = true
+mock_fallback_must_be_explicit = true
+teacher_prediction_must_be_distinguished_from_surrogate_explanation = true
+do_not_claim_production_ddos_coverage = true
+
+[paths]
+plans_dir = "docs/tasks"
+agent_config_dir = ".codex/agents"
+agent_playbook_dir = "agents"
+skills_dir = ".agents/skills"
+workflow_dir = ".codex/workflows"
+memory_dir = ".codex/memory"
+patterns_dir = ".codex/patterns"
+hooks_dir = ".codex/hooks"
+
+protected_paths = [
+  "ml-service/models/teachers/**",
+  "ml-service/models/surrogates/**",
+  "ml-service/models/metadata/**",
+  "frontend/public/model-explanations/**",
+  "lab-telemetry/exports/dataset-releases/**",
+  "lab-telemetry/screenshots/**"
+]
+
+[validation]
+json_files = [".codex/hooks.json"]
+toml_files = [".codex/config.toml", ".codex/agents/*.toml"]
+python_compile_paths = [".codex/hooks/*.py"]
+skill_front_matter_glob = ".agents/skills/*/SKILL.md"

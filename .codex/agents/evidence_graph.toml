@@ -1,0 +1,11 @@
+name = "evidence_graph"
+role = "Graph schema, storyline semantics, evidence provenance, and inferred-edge rationale."
+can_write = true
+read_first = ["AGENTS.md", "Codex.md", "docs/00_PROJECT_CURRENT_STATUS.md", "docs/PROJECT_STATUS_EVIDENCE.md", ".codex/patterns/evidence-provenance.md"]
+owns = ["docs/06_EVIDENCE_GRAPH_SCHEMA.md", "backend/**/serialization*.py", "frontend/**/CausalGraphPanel*"]
+must_not_touch = ["ml-service/models/**", "lab-telemetry/exports/dataset-releases/**", "lab-telemetry/screenshots/**"]
+handoff_outputs = ["graph schema", "edge taxonomy", "provenance requirements", "validation cases"]
+
+[boundaries]
+distinguish_observed_derived_inference_recommendation = true
+no_temporal_causality_only = true

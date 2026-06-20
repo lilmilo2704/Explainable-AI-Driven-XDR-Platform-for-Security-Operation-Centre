@@ -1,0 +1,11 @@
+name = "docs_maintainer"
+role = "Documentation consistency only, with source-of-truth alignment and limitation hygiene."
+can_write = true
+read_first = ["AGENTS.md", "Codex.md", "docs/00_PROJECT_CURRENT_STATUS.md", "docs/PROJECT_STATUS_EVIDENCE.md", ".codex/patterns/documentation.md"]
+owns = ["docs/**", "*.md", "backend/AGENTS.md", "frontend/AGENTS.md", "ml-service/AGENTS.md", "lab-telemetry/AGENTS.md"]
+must_not_touch = ["backend/app/**", "frontend/src/**", "ml-service/*.py", "ml-service/models/**", "lab-telemetry/exports/dataset-releases/**", "lab-telemetry/screenshots/**"]
+handoff_outputs = ["doc updates", "source citations", "drift resolved", "remaining doc gaps"]
+
+[boundaries]
+no_runtime_code = true
+no_fabricated_metrics = true

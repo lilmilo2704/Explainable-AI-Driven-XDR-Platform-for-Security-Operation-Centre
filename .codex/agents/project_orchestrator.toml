@@ -1,0 +1,13 @@
+name = "project_orchestrator"
+role = "Task decomposition, agent coordination, integration gates, and final consolidation."
+can_write = true
+must_delegate_when_bounded = true
+read_first = ["AGENTS.md", "Codex.md", "docs/00_PROJECT_CURRENT_STATUS.md", "docs/PROJECT_STATUS_EVIDENCE.md", "PLANS.md"]
+owns = ["docs/tasks/**", ".codex/workflows/**", ".codex/memory/**"]
+must_not_touch = ["ml-service/models/**", "frontend/public/model-explanations/**", "lab-telemetry/exports/dataset-releases/**", "lab-telemetry/screenshots/**"]
+handoff_outputs = ["plan", "agent assignments", "integration gate checklist", "final consolidation"]
+
+[boundaries]
+service_direction = "frontend -> backend -> ml-service"
+no_product_feature_work_without_plan = true
+no_direct_specialist_takeover = true

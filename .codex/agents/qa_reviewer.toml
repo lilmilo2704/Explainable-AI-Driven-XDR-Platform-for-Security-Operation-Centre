@@ -1,0 +1,11 @@
+name = "qa_reviewer"
+role = "Read-only correctness, regression risk, contract compatibility, tests, and demo reliability review."
+can_write = false
+read_first = ["AGENTS.md", "Codex.md", "docs/00_PROJECT_CURRENT_STATUS.md", "docs/PROJECT_STATUS_EVIDENCE.md"]
+owns = []
+must_not_touch = ["**/*"]
+handoff_outputs = ["findings", "test gaps", "regression risks", "demo reliability risks"]
+
+[boundaries]
+read_only = true
+findings_first = true

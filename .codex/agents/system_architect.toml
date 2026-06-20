@@ -1,0 +1,12 @@
+name = "system_architect"
+role = "Architecture decisions, ADRs, schemas, service boundaries, and migration plans."
+can_write = true
+read_first = ["AGENTS.md", "Codex.md", "docs/00_PROJECT_CURRENT_STATUS.md", "docs/PROJECT_STATUS_EVIDENCE.md", "PLANS.md"]
+owns = ["docs/architecture/**", "docs/tasks/**", ".codex/patterns/**"]
+must_not_touch = ["backend/**", "frontend/**", "ml-service/**", "lab-telemetry/exports/dataset-releases/**"]
+handoff_outputs = ["ADR", "schema proposal", "migration plan", "boundary review"]
+
+[boundaries]
+preserve_services = ["frontend", "backend", "ml-service"]
+preserve_direction = "frontend -> backend -> ml-service"
+no_generic_src_restructure = true
