@@ -36,6 +36,13 @@ class IncidentWindowPayload(BaseModel):
     alerts: list[AlertIngestPayload]
 
 
+class OfficialRunImportRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    release_id: str = Field(min_length=1, max_length=128)
+    run_id: str = Field(min_length=1, max_length=128)
+
+
 class NormalizedAlert(BaseModel):
     external_rule_id: str
     severity_hint: int

@@ -1,21 +1,33 @@
 from __future__ import annotations
 
 import json
+import secrets
 from datetime import datetime, timezone
 from typing import Any
 
 import httpx
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, Header, HTTPException
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import desc, text
 from sqlalchemy.orm import Session, selectinload
 
-from app.core.config import ML_SERVICE_URL, SEED_ALERTS_PATH, SEED_MULTI_STAGE_PATH
+from app.core.config import (
+    ML_SERVICE_URL,
+    SEED_ALERTS_PATH,
+    SEED_MULTI_STAGE_PATH,
+    XDR_DEMO_API_TOKEN,
+    XDR_DEMO_IMPORT_ENABLED,
+)
 from app.db import engine, get_db
 from app.models import Alert, Base, Incident, IncidentAlertLink
-from app.schemas import AlertIngestPayload, IncidentWindowPayload
+from app.schemas import AlertIngestPayload, IncidentWindowPayload, OfficialRunImportRequest
 from app.services.ingestion_service import clear_demo_data, ingest_single_alert, ingest_window_incident
 from app.services.ml_client import MLClient
+from app.services.official_run_import_service import (
+    OfficialRunRejection,
+    official_run_import_service,
+)
 from app.services.serialization import (
     build_dashboard_summary,
     parse_public_incident_id,
@@ -104,6 +116,71 @@ def now_iso() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+def _extract_bearer_token(authorization: str | None) -> str | None:
+    if not authorization:
+        return None
+    scheme, _, value = authorization.partition(" ")
+    if scheme.lower() != "bearer" or not value:
+        return None
+    return value.strip()
+
+
+def require_demo_import_auth(
+    authorization: str | None = Header(default=None),
+    x_xdr_demo_api_token: str | None = Header(default=None, alias="X-XDR-Demo-API-Token"),
+) -> None:
+    if not XDR_DEMO_IMPORT_ENABLED:
+        raise HTTPException(
+            status_code=403,
+            detail={
+                "state": "rejected",
+                "verified": False,
+                "rejection": {
+                    "code": "demo_import_disabled",
+                    "message": "Official run import verification is disabled.",
+                },
+            },
+        )
+    if not XDR_DEMO_API_TOKEN:
+        raise HTTPException(
+            status_code=403,
+            detail={
+                "state": "rejected",
+                "verified": False,
+                "rejection": {
+                    "code": "demo_import_token_not_configured",
+                    "message": "Official run import verification token is not configured.",
+                },
+            },
+        )
+
+    supplied_token = _extract_bearer_token(authorization) or x_xdr_demo_api_token
+    if not supplied_token:
+        raise HTTPException(
+            status_code=401,
+            detail={
+                "state": "rejected",
+                "verified": False,
+                "rejection": {
+                    "code": "demo_import_token_missing",
+                    "message": "Official run import verification token is required.",
+                },
+            },
+        )
+    if not secrets.compare_digest(supplied_token, XDR_DEMO_API_TOKEN):
+        raise HTTPException(
+            status_code=403,
+            detail={
+                "state": "rejected",
+                "verified": False,
+                "rejection": {
+                    "code": "demo_import_token_invalid",
+                    "message": "Official run import verification token is invalid.",
+                },
+            },
+        )
+
+
 @app.get("/health")
 def health(db: Session = Depends(get_db)) -> dict[str, Any]:
     db_status = "ok"
@@ -130,6 +207,20 @@ def health(db: Session = Depends(get_db)) -> dict[str, Any]:
         "ml_service": ml_status,
         "timestamp": now_iso(),
     }
+
+
+@app.post("/api/official-runs/import", response_model=None)
+def verify_official_run_route(
+    payload: OfficialRunImportRequest,
+    _: None = Depends(require_demo_import_auth),
+) -> Any:
+    try:
+        return official_run_import_service.verify(payload.release_id, payload.run_id)
+    except OfficialRunRejection as exc:
+        return JSONResponse(
+            status_code=exc.status_code,
+            content=exc.as_response(payload.release_id, payload.run_id),
+        )
 
 
 @app.post("/api/alerts/ingest")
